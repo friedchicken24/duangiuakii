@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #chat-container {
+            width: 800px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        #chat-box {
+            height: 820px;
+            padding: 10px;
+            overflow-y: scroll;
+            border-bottom: 1px solid #ccc;
+        }
+        #chat-box .message {
+            margin: 10px 0;
+        }
+        #chat-box .message.user {
+            text-align: right;
+        }
+        #chat-input {
+            display: flex;
+        }
+        #chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+        #chat-input button {
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        #chat-input button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-box"></div>
+        <div id="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message here..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+            if (message) {
+                addMessageToChatBox(message, 'user');
+                userInput.value = '';
+                respondToMessage(message);
+            }
+        }
+
+        function addMessageToChatBox(message, sender) {
+            const chatBox = document.getElementById('chat-box');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message ' + sender;
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function respondToMessage(message) {
+            const responses = {
+                'hello': 'Hello! How can I help you today?',
+                'hi': 'Hi there! How can I assist you?',
+                'how are you': 'I am just a bot, but I am here to help you!',
+                'bye': 'Goodbye! Have a nice day!'
+            };
+
+            const normalizedMessage = message.toLowerCase();
+            const response = responses[normalizedMessage] || "Xin loi toi khong hieu ban noi gi.";
+
+            setTimeout(() => {
+                addMessageToChatBox(response, 'bot');
+            }, 500); // Simulate a delay for the bot response
+        }
+    </script>
+</body>
+</html>
